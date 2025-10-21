@@ -142,7 +142,8 @@ export async function createServer(
 
   app.use(router.routes());
 
-  const server = app.listen(port);
+  // Bind to 0.0.0.0 to accept connections from nginx proxy on separate server
+  const server = app.listen(port, '0.0.0.0');
   server.keepAliveTimeout = 120_000; // intentionally longer than the ALB timeout
   server.requestTimeout = 120_000; // no requests should take longer than 2 minutes
 
